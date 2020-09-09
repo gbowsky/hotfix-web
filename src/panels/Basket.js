@@ -18,10 +18,10 @@ const Basket = ({ match: { params: { areaId, itemId }}, foodAreas, order}) => {
 
     useEffect(() => {
         if(localStorage.SettingFaster){
-            setFaster((localStorage.SettingFaster==='true' ? true : false));
+            setFaster((localStorage.SettingFaster === 'true'));
         }
         if(localStorage.SettingselfService){
-            setSelfService((localStorage.SettingselfService==='true' ? true : false));
+            setSelfService((localStorage.SettingselfService === 'true'));
         }
         if(localStorage.SettingTime){
             setTime(localStorage.SettingTime);
@@ -53,19 +53,25 @@ const Basket = ({ match: { params: { areaId, itemId }}, foodAreas, order}) => {
 
     const checkForms = (cb) => {
         if (!faster) {
+            console.log(true)
+                console.log(time)
             if (time === "") {
                 alert("Вы не указали время к которому готовить Ваш заказ\n"+time)
             } else {
                 let times = time.split(':');
                 let hours = parseInt(times[0]);
                 let minutes = parseInt(times[1]);
+                console.log(hours, minutes);
                 if (!(hours >= 0 && hours <= 24) || !(minutes >= 0 && minutes <= 59)) {
                     alert("Вы указали неверное время для готовки заказа");
+                    console.log("lol");
                     return false; //Неправильное время заказа
                 } else {
+                    console.log("kek");
                     return true; //Правильное время заказа
                 }
             }
+            console.log(time)
         }
 
         if (cb) {
@@ -189,9 +195,7 @@ const Basket = ({ match: { params: { areaId, itemId }}, foodAreas, order}) => {
                 </div>
             </div>
             <footer className="Place__footer">
-                <Link onClick={()=>{checkForms(()=>{
-                    history.push(`/order/${area.id}/${item.id}`);
-                })}} className="Place__order">
+                <Link onClick={()=>{ if (checkForms()) {history.push(`/order/${area.id}/${item.id}`);}}} className="Place__order">
                     Оплатить {price}
                 </Link>
             </footer>
