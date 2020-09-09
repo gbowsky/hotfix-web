@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import Home from './panels/Home';
@@ -127,6 +127,12 @@ const foodsMap = FOOD_AREAS.reduce((result, area) => {
 const App = () => {
     const [ orderStatuses, setOrderStatuses ] = useState(JSON.parse((localStorage.getItem('orderStatuses') || 'null')) || {});
     const [ order, setOrder ] = useState(JSON.parse((localStorage.getItem('order') || 'null')) || {});
+
+    useEffect(() => {
+        localStorage.removeItem('SettingFaster');
+        localStorage.removeItem('SettingTime');
+        localStorage.removeItem('SettingselfService');
+    }, []);
 
     return (
         <Router>

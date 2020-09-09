@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import accounting from 'accounting';
 import {useHistory} from "react-router-dom";
@@ -15,6 +15,24 @@ const Basket = ({ match: { params: { areaId, itemId }}, foodAreas, order}) => {
     const [ selfService, setSelfService ] = useState(false);
     const area = foodAreas.filter(area => area.id === areaId)[0];
     const item = area.items.filter(item => item.id === itemId)[0];
+
+    useEffect(() => {
+        if(localStorage.SettingFaster){
+            setFaster((localStorage.SettingFaster==='true' ? true : false));
+        }
+        if(localStorage.SettingselfService){
+            setSelfService((localStorage.SettingselfService==='true' ? true : false));
+        }
+        if(localStorage.SettingTime){
+            setTime(localStorage.SettingTime);
+        }
+    }, [])
+
+    useEffect(() => {
+        localStorage.setItem('SettingFaster', faster);
+        localStorage.setItem('SettingTime', time);
+        localStorage.setItem('SettingselfService', selfService);
+    }, [faster, time, selfService])
 
     const [ price, products ] = useMemo(() => {
         const foodIds = new Set((item.foods || []).map(item => item.id));
