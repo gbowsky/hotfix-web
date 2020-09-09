@@ -66,8 +66,6 @@ const Basket = ({ match: { params: { areaId, itemId }}, foodAreas, order}) => {
                     return true; //Правильное время заказа
                 }
             }
-
-            //Узнаём с собой ли взял пользователь заказ TODO
         }
 
         if (cb) {
